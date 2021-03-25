@@ -18,3 +18,6 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/current-character', "CharacterController@currentCharacter");
+Route::get('/all-characters', "CharacterController@index");
