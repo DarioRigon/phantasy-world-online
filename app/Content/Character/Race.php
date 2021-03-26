@@ -4,11 +4,11 @@ namespace App\Content\Character;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Character extends Model
+class Race extends Model
 {
     protected $guarded = [];
-    
-    public function race(){
-        return $this->hasOne(Race::class);
+
+    public function characters(){
+        return $this->belongsToMany(Character::class);
     }
 }

@@ -41,5 +41,16 @@ class User extends Authenticatable
     public function characters(){
         return $this->hasMany(Character::class);
     }
+    public function createBaseChars(){
+        for($i = 1; $i<5;$i++){
+            $this->characters()->create(
+                [
+                "name"=>"DummyCharacter",
+                "race_id"=>1,
+                "slot"=>$i,
+                ]
+            );
+        }
+    }
 
 }

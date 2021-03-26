@@ -2010,6 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../constants */ "./resources/js/constants.js");
 //
 //
 //
@@ -2026,41 +2027,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      characters: []
+      characters: [],
+      races: [],
+      newCharacter: {
+        name: "",
+        race_id: 0,
+        identification_id: null
+      }
     };
   },
   created: function created() {
     this.loadCharacters();
+    this.races = _constants__WEBPACK_IMPORTED_MODULE_0__["RACE_ID"];
   },
   methods: {
     loadCharacters: function loadCharacters() {
       var app = this;
       axios.get("/all-characters").then(function (response) {
         app.characters = [];
-        var slot = 1;
         response.data.forEach(function (character) {
-          app.character.push({
+          app.characters.push({
             id: character.id,
             name: character.name,
             isEditing: false,
-            slot: slot
+            slot: character.slot,
+            isActive: character.isActive
           });
-          slot++;
         });
-
-        for (var i = app.characters.length; i < 4; i++) {
-          app.characters.push({
-            id: null,
-            name: null,
-            isEditing: false,
-            slot: slot
-          });
-          slot++;
-        }
       });
+    },
+    edit: function edit(character) {
+      this.characters.forEach(function (_char) {
+        _char.isEditing = false;
+      });
+      character.isEditing = true;
+    },
+    obtainId: function obtainId() {
+      console.log("obtaining id");
+      this.newCharacter.identification_id = parseInt(Math.random() * (_constants__WEBPACK_IMPORTED_MODULE_0__["IDENTIFICATION_ID"].length - 0) + 0);
+    },
+    createCharacter: function createCharacter() {
+      console.log(this.newCharacter);
+    }
+  },
+  filters: {
+    identification: function identification(value) {
+      return _constants__WEBPACK_IMPORTED_MODULE_0__["IDENTIFICATION_ID"][value];
     }
   }
 });
@@ -37914,12 +37955,169 @@ var render = function() {
     _c(
       "ul",
       { staticClass: "list-group" },
-      _vm._l(_vm.characters, function(character) {
-        return _c("li", { staticClass: "list-group-item" }, [
-          character.id == null
-            ? _c("div", [
-                _vm._v("\n                Crea nuovo personaggio\n            ")
-              ])
+      _vm._l(_vm.characters, function(character, index) {
+        return _c("li", { key: index, staticClass: "list-group-item" }, [
+          !character.isActive
+            ? _c(
+                "div",
+                [
+                  character.isEditing
+                    ? [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c("label", [_vm._v("Nome personaggio")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.newCharacter.name,
+                                  expression: "newCharacter.name"
+                                }
+                              ],
+                              staticClass: "form-control mb-3",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.newCharacter.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.newCharacter,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", [_vm._v("Razza")]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.newCharacter.race_id,
+                                    expression: "newCharacter.race_id"
+                                  }
+                                ],
+                                staticClass: "form-control mb-3",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.newCharacter,
+                                      "race_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              _vm._l(_vm.races, function(race, rindex) {
+                                return _c(
+                                  "option",
+                                  { key: rindex, domProps: { value: rindex } },
+                                  [_vm._v(_vm._s(race))]
+                                )
+                              }),
+                              0
+                            ),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "d-block" }, [
+                              _vm._v("ID di identificazione")
+                            ]),
+                            _vm._v(" "),
+                            _vm.newCharacter.identification_id == null
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary mb-3",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.obtainId()
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Ottieni ID")]
+                                )
+                              : _c("h3", { staticClass: "mb-3" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm._f("identification")(
+                                        _vm.newCharacter.identification_id
+                                      )
+                                    )
+                                  )
+                                ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-secondary",
+                                on: {
+                                  click: function($event) {
+                                    character.isEditing = false
+                                  }
+                                }
+                              },
+                              [_vm._v("Annulla")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-success",
+                                attrs: {
+                                  disabled:
+                                    _vm.newCharacter.name.length < 5 ||
+                                    _vm.newCharacter.identification_id == null
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.createCharacter()
+                                  }
+                                }
+                              },
+                              [_vm._v("Crea personaggio")]
+                            )
+                          ])
+                        ])
+                      ]
+                    : [
+                        _c(
+                          "span",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.edit(character)
+                              }
+                            }
+                          },
+                          [_vm._v("Crea nuovo personaggio")]
+                        )
+                      ]
+                ],
+                2
+              )
             : _c("div", [
                 _vm._v(
                   "\n                " +
@@ -50168,6 +50366,8 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./constants */ "./resources/js/constants.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -50689,6 +50889,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Nav_vue_vue_type_template_id_32618c1c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/constants.js":
+/*!***********************************!*\
+  !*** ./resources/js/constants.js ***!
+  \***********************************/
+/*! exports provided: IDENTIFICATION_ID, RACE_ID */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IDENTIFICATION_ID", function() { return IDENTIFICATION_ID; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RACE_ID", function() { return RACE_ID; });
+var IDENTIFICATION_ID = ["Bluefull", "Greenill", "Oran", "Pinkal", "Purplenum", "Redria", "Skyly", "Viridia", "Yellowboze", "Whitill"];
+var RACE_ID = ["Humar", "Hunewearl", "Hucast", "Hucaseal", "Ramar", "Ramarl", "Racast", "Racaseal", "Fomar", "Fomarl", "Fonewman", "Fonewearl"];
 
 /***/ }),
 

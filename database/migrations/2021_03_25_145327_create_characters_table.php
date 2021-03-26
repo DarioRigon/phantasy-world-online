@@ -19,17 +19,21 @@ class CreateCharactersTable extends Migration
             $table->string("slot");
 
             $table->string("name");
-            $table->string("race_id");
-            $table->string("identification_id");
+            $table->string("race_id")->default(1);
+            $table->string("identification_id")->default(1);
 
-            $table->unsignedInteger("hp");
-            $table->unsignedInteger("mp");
-            $table->unsignedInteger("atp");
-            $table->unsignedInteger("dfp");
-            $table->unsignedInteger("mst");
-            $table->unsignedInteger("ata");
-            $table->unsignedInteger("evp");
-            $table->unsignedInteger("lck");
+            $table->unsignedInteger("hp")->default(0);
+            $table->unsignedInteger("tp")->default(0);
+            $table->unsignedInteger("atp")->default(0);
+            $table->unsignedInteger("dfp")->default(0);
+            $table->unsignedInteger("mst")->default(0);
+            $table->unsignedInteger("ata")->default(0);
+            $table->unsignedInteger("evp")->default(0);
+            $table->unsignedInteger("lck")->default(0);
+
+            $table->unsignedBigInteger("exp")->default(0);
+
+            $table->boolean("isActive")->default(false);
             $table->timestamps();
         });
     }

@@ -14,10 +14,12 @@ class UserSeeder extends Seeder
     {
         User::truncate();
 
-        User::create([
-            "email"=>"mangasprai@icloud.com", 
-            "name"=>"Dario", 
-            "password"=>Hash::make("Mille987!!")
+            $user = User::create([
+                "email"=>"mangasprai@icloud.com", 
+                "name"=>"Dario", 
+                "password"=>Hash::make("Mille987!!")
             ]);
+        
+            $user->createBaseChars();
     }
 }
