@@ -2052,6 +2052,104 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2060,14 +2158,14 @@ __webpack_require__.r(__webpack_exports__);
       races: [],
       newCharacter: {
         name: "",
-        race_id: 0,
+        race: null,
         identification_id: null
       }
     };
   },
   created: function created() {
     this.loadCharacters();
-    this.races = _constants__WEBPACK_IMPORTED_MODULE_0__["RACE_ID"];
+    this.loadRaces();
   },
   methods: {
     loadCharacters: function loadCharacters() {
@@ -2083,6 +2181,12 @@ __webpack_require__.r(__webpack_exports__);
             isActive: character.isActive
           });
         });
+      });
+    },
+    loadRaces: function loadRaces() {
+      var app = this;
+      axios.get("/races/index").then(function (response) {
+        app.races = response.data;
       });
     },
     edit: function edit(character) {
@@ -37965,7 +38069,7 @@ var render = function() {
                     ? [
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-12" }, [
-                            _c("label", [_vm._v("Nome personaggio")]),
+                            _c("label", [_vm._v("Character Name")]),
                             _vm._v(" "),
                             _c("input", {
                               directives: [
@@ -37993,7 +38097,7 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _c("label", [_vm._v("Razza")]),
+                            _c("label", [_vm._v("Race")]),
                             _vm._v(" "),
                             _c(
                               "select",
@@ -38002,8 +38106,8 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.newCharacter.race_id,
-                                    expression: "newCharacter.race_id"
+                                    value: _vm.newCharacter.race,
+                                    expression: "newCharacter.race"
                                   }
                                 ],
                                 staticClass: "form-control mb-3",
@@ -38020,7 +38124,7 @@ var render = function() {
                                       })
                                     _vm.$set(
                                       _vm.newCharacter,
-                                      "race_id",
+                                      "race",
                                       $event.target.multiple
                                         ? $$selectedVal
                                         : $$selectedVal[0]
@@ -38028,18 +38132,180 @@ var render = function() {
                                   }
                                 }
                               },
-                              _vm._l(_vm.races, function(race, rindex) {
+                              _vm._l(_vm.races, function(race) {
                                 return _c(
                                   "option",
-                                  { key: rindex, domProps: { value: rindex } },
-                                  [_vm._v(_vm._s(race))]
+                                  { key: race.id, domProps: { value: race } },
+                                  [_vm._v(_vm._s(race.name))]
                                 )
                               }),
                               0
                             ),
                             _vm._v(" "),
+                            _vm.newCharacter.race != null
+                              ? _c("div", { staticClass: "card mb-3" }, [
+                                  _c("div", { staticClass: "card-body" }, [
+                                    _c("h3", [
+                                      _vm._v(_vm._s(_vm.newCharacter.race.name))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.newCharacter.race.description
+                                        )
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n                                         HP\n                                         "
+                                        ),
+                                        _c("div", { staticClass: "progress" }, [
+                                          _c("div", {
+                                            staticClass:
+                                              "progress-bar bg-success progress-bar-striped progress-bar-animated",
+                                            style:
+                                              "width:" +
+                                              _vm.newCharacter.race.hp +
+                                              "%",
+                                            attrs: { role: "progressbar" }
+                                          })
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n\n                                         TP\n                                         "
+                                        ),
+                                        _c("div", { staticClass: "progress" }, [
+                                          _c("div", {
+                                            staticClass:
+                                              "progress-bar progress-bar-striped progress-bar-animated",
+                                            style:
+                                              "width:" +
+                                              _vm.newCharacter.race.tp +
+                                              "%",
+                                            attrs: { role: "progressbar" }
+                                          })
+                                        ])
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n                                         ATP\n                                         "
+                                        ),
+                                        _c("div", { staticClass: "progress" }, [
+                                          _c("div", {
+                                            staticClass:
+                                              "progress-bar bg-danger progress-bar-striped progress-bar-animated",
+                                            style:
+                                              "width:" +
+                                              _vm.newCharacter.race.atp +
+                                              "%",
+                                            attrs: { role: "progressbar" }
+                                          })
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n\n                                         DFP\n                                         "
+                                        ),
+                                        _c("div", { staticClass: "progress" }, [
+                                          _c("div", {
+                                            staticClass:
+                                              "progress-bar bg-danger progress-bar-striped progress-bar-animated",
+                                            style:
+                                              "width:" +
+                                              _vm.newCharacter.race.dfp +
+                                              "%",
+                                            attrs: { role: "progressbar" }
+                                          })
+                                        ])
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n                                         MST\n                                         "
+                                        ),
+                                        _c("div", { staticClass: "progress" }, [
+                                          _c("div", {
+                                            staticClass:
+                                              "progress-bar bg-danger progress-bar-striped progress-bar-animated",
+                                            style:
+                                              "width:" +
+                                              _vm.newCharacter.race.mst +
+                                              "%",
+                                            attrs: { role: "progressbar" }
+                                          })
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n\n                                         ATA\n                                         "
+                                        ),
+                                        _c("div", { staticClass: "progress" }, [
+                                          _c("div", {
+                                            staticClass:
+                                              "progress-bar bg-danger progress-bar-striped progress-bar-animated",
+                                            style:
+                                              "width:" +
+                                              _vm.newCharacter.race.ata +
+                                              "%",
+                                            attrs: { role: "progressbar" }
+                                          })
+                                        ])
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n                                         EVP\n                                         "
+                                        ),
+                                        _c("div", { staticClass: "progress" }, [
+                                          _c("div", {
+                                            staticClass:
+                                              "progress-bar bg-danger progress-bar-striped progress-bar-animated",
+                                            style:
+                                              "width:" +
+                                              _vm.newCharacter.race.evp +
+                                              "%",
+                                            attrs: { role: "progressbar" }
+                                          })
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-md-6" }, [
+                                        _vm._v(
+                                          "\n\n                                         LCK\n                                         "
+                                        ),
+                                        _c("div", { staticClass: "progress" }, [
+                                          _c("div", {
+                                            staticClass:
+                                              "progress-bar bg-danger progress-bar-striped progress-bar-animated",
+                                            style:
+                                              "width:" +
+                                              _vm.newCharacter.race.lck +
+                                              "%",
+                                            attrs: { role: "progressbar" }
+                                          })
+                                        ])
+                                      ])
+                                    ])
+                                  ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
                             _c("label", { staticClass: "d-block" }, [
-                              _vm._v("ID di identificazione")
+                              _vm._v("Section ID")
                             ]),
                             _vm._v(" "),
                             _vm.newCharacter.identification_id == null
@@ -38112,7 +38378,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Crea nuovo personaggio")]
+                          [_vm._v("New Character")]
                         )
                       ]
                 ],

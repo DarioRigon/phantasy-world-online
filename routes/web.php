@@ -19,5 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//character
 Route::get('/current-character', "CharacterController@currentCharacter");
 Route::get('/all-characters', "CharacterController@index");
+
+
+//races
+Route::get("/races/index", "RaceController@index");

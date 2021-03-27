@@ -21,7 +21,8 @@ class CreateCharactersTable extends Migration
             $table->string("name");
             $table->string("race_id")->default(1);
             $table->string("identification_id")->default(1);
-
+            $table->unsignedInteger("lv")->default(1);
+            
             $table->unsignedInteger("hp")->default(0);
             $table->unsignedInteger("tp")->default(0);
             $table->unsignedInteger("atp")->default(0);

@@ -8,14 +8,112 @@
                         <div class="row">
                             
                             <div class="col-md-12">
-                                <label>Nome personaggio</label>
+                                <label>Character Name</label>
                                 <input type="text" class="form-control mb-3" v-model='newCharacter.name'>
-                                <label>Razza</label>
-                                <select class='form-control mb-3' v-model='newCharacter.race_id'>
-                                    <option :value='rindex' v-for='race,rindex in races' :key='rindex'>{{race}}</option>
+                                <label>Race</label>
+                                <select class='form-control mb-3' v-model='newCharacter.race'>
+                                    <option :value='race' v-for='race in races' :key='race.id'>{{race.name}}</option>
                                 </select>
-                                <label class='d-block'>ID di identificazione</label>
+                                <div v-if='newCharacter.race != null' class='card mb-3'>
+                                    <div class="card-body">
+                                    <h3>{{newCharacter.race.name}}</h3>
+                                    <p>{{newCharacter.race.description}}</p>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            HP
+                                            <div class="progress"> 
+                                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" 
+                                                role="progressbar" :style='"width:" + newCharacter.race.hp + "%"'>
+                                            </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            TP
+                                            <div class="progress"> 
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                                role="progressbar" :style='"width:" + newCharacter.race.tp + "%"'>
+                                            </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            ATP
+                                            <div class="progress"> 
+                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" 
+                                                role="progressbar" :style='"width:" + newCharacter.race.atp + "%"'>
+                                            </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            DFP
+                                            <div class="progress"> 
+                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" 
+                                                role="progressbar" :style='"width:" + newCharacter.race.dfp + "%"'>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            MST
+                                            <div class="progress"> 
+                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" 
+                                                role="progressbar" :style='"width:" + newCharacter.race.mst + "%"'>
+                                            </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            ATA
+                                            <div class="progress"> 
+                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" 
+                                                role="progressbar" :style='"width:" + newCharacter.race.ata + "%"'>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            EVP
+                                            <div class="progress"> 
+                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" 
+                                                role="progressbar" :style='"width:" + newCharacter.race.evp + "%"'>
+                                            </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            LCK
+                                            <div class="progress"> 
+                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" 
+                                                role="progressbar" :style='"width:" + newCharacter.race.lck + "%"'>
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    </div>
+                                </div>
+
+                                <label class='d-block'>Section ID</label>
                                 <button class='btn btn-primary mb-3' v-if='newCharacter.identification_id == null' @click='obtainId()'>Ottieni ID</button>
+                                
+
                                 <h3 v-else class='mb-3'>{{newCharacter.identification_id | identification}}</h3>
                             </div>
                         </div>
@@ -28,7 +126,7 @@
                     </template>
 
                     <template v-else>
-                        <span @click='edit(character)'>Crea nuovo personaggio</span>
+                        <span @click='edit(character)'>New Character</span>
                     </template>
                </div>
 
@@ -48,7 +146,7 @@ export default {
             races: [],
             newCharacter: {
                 name: "",
-                race_id: 0,
+                race: null,
                 identification_id: null,
             },
 
@@ -56,7 +154,7 @@ export default {
     },
     created(){
         this.loadCharacters();
-        this.races = Constants.RACE_ID;
+        this.loadRaces();
     },
     methods:{
         loadCharacters(){
@@ -73,6 +171,12 @@ export default {
                         isActive: character.isActive,
                     });
                 });
+            });
+        },
+        loadRaces(){
+            var app = this;
+            axios.get("/races/index").then(function(response){
+                app.races = response.data;
             });
         },
         edit(character){

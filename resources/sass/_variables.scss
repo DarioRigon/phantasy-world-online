@@ -17,8 +17,14 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
-
+$pso-bg: #213b3c;
 
 .pointer{
     cursor:pointer;
+}
+.card{
+
+    border: 2px solid #38c172!important;
+    background-color:$pso-bg!important;
+    color:white;
 }

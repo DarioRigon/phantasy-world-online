@@ -4,6 +4,12 @@
   cursor: pointer;
 }
 
+.card {
+  border: 2px solid #38c172 !important;
+  background-color: #213b3c !important;
+  color: white;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
